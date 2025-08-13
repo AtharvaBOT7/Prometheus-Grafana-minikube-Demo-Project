@@ -13,7 +13,8 @@
 We will now install Prometheus and Grafana on the minikube cluster that we have created.
 
 >>>>> Install Prometheus Using Helm <<<<<
-9. Install helm - (winget install Helm.Helm / scoop install helm / choco install kubernetes-helm)
+9. For mac: brew install helm
+    For Windows, install helm - (winget install Helm.Helm / scoop install helm / choco install kubernetes-helm)
 10. Validate if helm was installed properly - "helm version"
 11. Add Prometheus to Helm repo:
     "helm repo add prometheus-community https://prometheus-community.github.io/helm-charts"
@@ -29,14 +30,14 @@ We will now install Prometheus and Grafana on the minikube cluster that we have 
 
 >>>>> Configure Prometheus to Scrape Your Flask App <<<<<
 16. Get the Flask App Service IP - "kubectl get svc" (Look for the flask-metrics-app and note its ClusterIP and port.)
-    10.107.61.186 - 5000:30737/TCP
+    10.97.248.230 - 5001:32675/TCP
 17. Update the Prometheus ConfigMap to add your Flask app as a scrape target: "kubectl edit configmap prometheus-server -n monitoring"
 18. Look for the scrape_configs section and add:
 
 scrape_configs:
   - job_name: 'flask-app'
     static_configs:
-      - targets: ['10.107.61.186:5001']
+      - targets: ['10.97.248.230:5001']
 
 >> Prometheus Restart Option <<
 
